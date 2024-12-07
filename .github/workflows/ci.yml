@@ -49,6 +49,12 @@ jobs:
         name: Check Mercure reachability
         run: curl -vkI --fail-with-body https://localhost/.well-known/mercure?topic=test
       -
+        name: Run PHP CS FIXER
+        run: docker compose exec -T php composer style
+      -
+        name: Run PHP STAN
+        run: docker compose exec -T php composer quality
+      -
         name: Create test database
         if: false # Remove this line if Doctrine ORM is installed
         run: docker compose exec -T php bin/console -e test doctrine:database:create
@@ -58,8 +64,7 @@ jobs:
         run: docker compose exec -T php bin/console -e test doctrine:migrations:migrate --no-interaction
       -
         name: Run PHPUnit
-        if: false # Remove this line if PHPUnit is installed
-        run: docker compose exec -T php bin/phpunit
+        run: docker compose exec -T php composer test
       -
         name: Doctrine Schema Validator
         if: false # Remove this line if Doctrine ORM is installed
@@ -74,3 +79,5 @@ jobs:
       -
         name: Lint Dockerfile
         uses: hadolint/hadolint-action@v3.1.0
+
+
