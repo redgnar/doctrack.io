@@ -1,2 +1,2 @@
-tenant:
-    database_url: '%env(DATABASE_URL)%' 
+#tenant:
+#    database_url: '%env(DATABASE_URL)%'
