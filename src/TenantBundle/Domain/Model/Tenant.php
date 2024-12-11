@@ -4,10 +4,10 @@ namespace App\TenantBundle\Domain\Model;
 
 use App\DDDCommonBundle\Domain\Model\EventRecorder;
 use App\TenantBundle\Domain\Events\TenantCreated;
+use App\TenantBundle\Domain\ValueObject\DatabaseConfiguration;
+use App\TenantBundle\Domain\ValueObject\DatabaseName;
 use App\TenantBundle\Domain\ValueObject\TenantIdentifier;
 use App\TenantBundle\Domain\ValueObject\TenantName;
-use App\TenantBundle\Domain\ValueObject\DatabaseName;
-use App\TenantBundle\Domain\ValueObject\DatabaseConfiguration;
 use Symfony\Component\Uid\Uuid;
 
 class Tenant
@@ -19,7 +19,7 @@ class Tenant
         private TenantIdentifier $identifier,
         private TenantName $name,
         private DatabaseName $databaseName,
-        private DatabaseConfiguration $configuration
+        private DatabaseConfiguration $configuration,
     ) {
     }
 
@@ -27,7 +27,7 @@ class Tenant
         TenantIdentifier $identifier,
         TenantName $name,
         DatabaseName $databaseName,
-        DatabaseConfiguration $configuration = null
+        DatabaseConfiguration $configuration,
     ): self {
         $tenant = new self(
             id: Uuid::v4(),
@@ -42,7 +42,7 @@ class Tenant
             identifier: $tenant->identifier->toString(),
             name: $tenant->name->toString(),
             dataBaseName: $tenant->databaseName->toString(),
-            connection: $tenant->configuration->toArray(),
+            configuration: $tenant->configuration->toArray(),
             version: 1,
             eventOccurred: new \DateTimeImmutable()
         ));
@@ -50,19 +50,19 @@ class Tenant
         return $tenant;
     }
 
-    public static function recreate(
+    public static function reconstruct(
         Uuid $id,
         TenantIdentifier $identifier,
         TenantName $name,
         DatabaseName $databaseName,
-        array $configuration = []
+        DatabaseConfiguration $configuration,
     ): self {
         return new self(
             id: $id,
             identifier: $identifier,
             name: $name,
             databaseName: $databaseName,
-            configuration: DatabaseConfiguration::fromArray($configuration)
+            configuration: $configuration
         );
     }
 
@@ -90,4 +90,4 @@ class Tenant
     {
         return $this->configuration;
     }
-} 
+}

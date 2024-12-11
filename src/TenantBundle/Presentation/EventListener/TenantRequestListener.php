@@ -1,8 +1,8 @@
 <?php
 
-namespace App\TenantBundle\EventListener;
+namespace App\TenantBundle\Presentation\EventListener;
 
-use App\TenantBundle\Infrastructure\Doctrine\Repository\TenantRepository;
+use App\TenantBundle\Infrastructure\Repository\TenantRepository;
 use App\TenantBundle\Infrastructure\Service\TenantContextService;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
@@ -10,7 +10,7 @@ class TenantRequestListener
 {
     public function __construct(
         private readonly TenantRepository $tenantRepository,
-        private readonly TenantContextService $tenantContext
+        private readonly TenantContextService $tenantContext,
     ) {
     }
 
@@ -28,8 +28,7 @@ class TenantRequestListener
         }
 
         $tenant = $this->tenantRepository->findByIdentifier($tenantId);
-        if ($tenant) {
-            $this->tenantContext->setCurrentTenant($tenant);
-        }
+
+        $this->tenantContext->setCurrentTenant($tenant);
     }
-} 
+}

@@ -17,4 +17,4 @@ final class TenantName
     {
         return $this->value;
     }
-} 
+}

@@ -2,18 +2,21 @@
 
 namespace App\TenantBundle\Infrastructure\Service;
 
-use App\TenantBundle\Domain\Model\Tenant;
 use App\TenantBundle\Domain\Exception\TenantNotFoundException;
+use App\TenantBundle\Domain\Model\Tenant;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 
 class TenantContextService
 {
     private ?Tenant $currentTenant = null;
+    /**
+     * @var Connection[]
+     */
     private array $connections = [];
 
     public function __construct(
-        private readonly string $databaseUrl
+        private readonly string $databaseUrl,
     ) {
     }
 
@@ -45,18 +48,21 @@ class TenantContextService
     private function createConnection(Tenant $tenant): Connection
     {
         return DriverManager::getConnection([
-            'url' => $this->buildDatabaseUrl($tenant)
+            'url' => $this->buildDatabaseUrl($tenant),
         ]);
     }
 
     private function buildDatabaseUrl(Tenant $tenant): string
     {
         $params = parse_url($this->databaseUrl);
-        $params['path'] = '/' . $tenant->getDatabaseName()->toString();
-        
+        $params['path'] = '/'.$tenant->getDatabaseName()->toString();
+
         return $this->buildUrl($params);
     }
 
+    /**
+     * @param array{scheme: string, user: string, pass: string, host: string, port: ?int, path: string} $params
+     */
     private function buildUrl(array $params): string
     {
         return sprintf(
@@ -69,4 +75,4 @@ class TenantContextService
             $params['path']
         );
     }
-} 
+}

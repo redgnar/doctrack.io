@@ -9,11 +9,11 @@ final class TenantIdentifier
         if (empty($value)) {
             throw new \InvalidArgumentException('Tenant identifier cannot be empty');
         }
-        
+
         if (strlen($value) > 50) {
             throw new \InvalidArgumentException('Tenant identifier cannot be longer than 50 characters');
         }
-        
+
         if (!preg_match('/^[a-z0-9-]+$/', $value)) {
             throw new \InvalidArgumentException('Tenant identifier can only contain lowercase letters, numbers, and hyphens');
         }
@@ -28,4 +28,4 @@ final class TenantIdentifier
     {
         return $this->value;
     }
-} 
+}

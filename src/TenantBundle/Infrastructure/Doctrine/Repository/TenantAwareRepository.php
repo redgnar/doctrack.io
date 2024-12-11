@@ -8,7 +8,7 @@ use Doctrine\DBAL\Connection;
 abstract class TenantAwareRepository
 {
     public function __construct(
-        protected TenantContextService $tenantContext
+        protected TenantContextService $tenantContext,
     ) {
     }
 
@@ -16,4 +16,4 @@ abstract class TenantAwareRepository
     {
         return $this->tenantContext->getTenantConnection();
     }
-} 
+}

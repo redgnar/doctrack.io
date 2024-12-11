@@ -12,4 +12,4 @@ class DDDCommonBundle extends Bundle
     {
         return new DDDCommonExtension();
     }
-} 
+}

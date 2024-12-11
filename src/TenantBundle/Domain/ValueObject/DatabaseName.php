@@ -17,4 +17,4 @@ final class DatabaseName
     {
         return $this->value;
     }
-} 
+}

@@ -11,7 +11,10 @@ final readonly class TenantCreated
         public string $identifier,
         public string $name,
         public string $dataBaseName,
-        public array $connection,
+        /**
+         * @var array<string, mixed>
+         */
+        public array $configuration,
         public int $version,
         public \DateTimeImmutable $eventOccurred,
     ) {

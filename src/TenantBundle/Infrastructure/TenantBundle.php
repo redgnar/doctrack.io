@@ -12,4 +12,4 @@ class TenantBundle extends Bundle
     {
         return new TenantExtension();
     }
-} 
+}

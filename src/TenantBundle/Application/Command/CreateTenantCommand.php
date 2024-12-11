@@ -7,7 +7,11 @@ class CreateTenantCommand
     public function __construct(
         public readonly string $identifier,
         public readonly string $name,
-        public readonly string $databaseName
+        public readonly string $databaseName,
+        /**
+         * @var array<string, mixed>
+         */
+        public readonly array $configuration,
     ) {
     }
-} 
+}

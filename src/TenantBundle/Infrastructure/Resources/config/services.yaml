@@ -5,7 +5,7 @@ services:
         public: false
 
 #    App\TenantBundle\Domain\Repository\TenantRepositoryInterface:
-#        class: App\TenantBundle\Infrastructure\Doctrine\Repository\DoctrineTenantRepository
+#        class: App\TenantBundle\Infrastructure\Doctrine\Repository\TenantRepository
 
 #    App\TenantBundle\Infrastructure\Service\TenantContextService:
 #        arguments:
@@ -17,3 +17,8 @@ services:
 
     App\TenantBundle\Presentation\EventListener\TenantRequestListener:
         - { name: kernel.event_listener, event: kernel.request }
+
+    App\TenantBundle\Domain\Repository\TenantRepositoryInterface:
+        class: App\TenantBundle\Infrastructure\Repository\TenantRepository
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
