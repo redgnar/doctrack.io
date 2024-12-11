@@ -1,0 +1,19 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+#    App\TenantBundle\Domain\Repository\TenantRepositoryInterface:
+#        class: App\TenantBundle\Infrastructure\Doctrine\Repository\DoctrineTenantRepository
+
+#    App\TenantBundle\Infrastructure\Service\TenantContextService:
+#        arguments:
+#            $databaseUrl: '%env(resolve:DATABASE_URL)%'
+
+    App\TenantBundle\Application\Handler\:
+        resource: '../../../Application/Handler'
+        tags: ['messenger.message_handler']
+
+    App\TenantBundle\Presentation\EventListener\TenantRequestListener:
+        - { name: kernel.event_listener, event: kernel.request }
